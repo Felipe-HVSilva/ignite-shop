@@ -72,7 +72,7 @@ export default function Product({ product }: ProductProps) {
 export const getStaticPaths: GetStaticPaths = async () => {
   return {
     paths: [{ params: { id: "prod_OXBulg3bxxIqoP" } }],
-    fallback: true,
+    fallback: "blocking",
   }
 }
 
@@ -86,6 +86,8 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
   })
 
   const price = product.default_price as Stripe.Price
+
+  console.log(product)
 
   return {
     props: {
