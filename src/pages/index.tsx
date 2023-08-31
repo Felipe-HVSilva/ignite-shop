@@ -10,6 +10,7 @@ import { stripe } from "../lib/stripe"
 import { HomeContainer, Product } from "../styles/pages/home"
 
 import "keen-slider/keen-slider.min.css"
+import { ShoppingBag } from "lucide-react"
 
 interface HomeProps {
   products: {
@@ -47,8 +48,14 @@ export default function Home({ products }: HomeProps) {
                 />
 
                 <footer>
-                  <strong>{product.name}</strong>
-                  <span>{product.price}</span>
+                  <div className="info-product">
+                    <strong>{product.name}</strong>
+                    <span>{product.price}</span>
+                  </div>
+
+                  <button>
+                    <ShoppingBag color="white" size={32} />
+                  </button>
                 </footer>
               </Product>
             </Link>

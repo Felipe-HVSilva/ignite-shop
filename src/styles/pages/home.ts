@@ -42,15 +42,30 @@ export const Product = styled("div", {
 
     background: "rgba(0, 0, 0, 0.4)",
 
-    strong: {
-      fontSize: "$lg",
-      color: "$gray100",
+    ".info-product": {
+      display: "flex",
+      flexDirection: "column",
+      gap: "0.25rem",
+
+      strong: {
+        fontSize: "$lg",
+        color: "$gray100",
+      },
+
+      span: {
+        fontSize: "$xl",
+        fontWeight: "bold",
+        color: "$green300",
+      },
     },
 
-    span: {
-      fontSize: "$xl",
-      fontWeight: "bold",
-      color: "$green300",
+    button: {
+      backgroundColor: "$green500",
+      padding: "0.75rem",
+      border: "none",
+      borderRadius: "0.375rem",
+
+      cursor: "pointer",
     },
   },
 
