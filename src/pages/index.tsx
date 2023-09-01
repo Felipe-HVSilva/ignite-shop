@@ -11,6 +11,7 @@ import { HomeContainer, Product } from "../styles/pages/home"
 
 import "keen-slider/keen-slider.min.css"
 import { ShoppingBag } from "lucide-react"
+import { useCart } from "../hooks/useCart"
 
 interface HomeProps {
   products: {

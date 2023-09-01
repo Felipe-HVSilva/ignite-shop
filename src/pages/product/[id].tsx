@@ -10,37 +10,22 @@ import Image from "next/image"
 import axios from "axios"
 import { useState } from "react"
 import Head from "next/head"
+import { useCart } from "../../hooks/useCart"
+import { formatedPrice } from "../../utils/formatedPrice"
 
 interface ProductProps {
   product: {
     id: string
     name: string
     imageUrl: string
-    price: string
+    price: number
     description: string
     defaultPriceId: string
   }
 }
 
 export default function Product({ product }: ProductProps) {
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] =
-    useState(false)
-
-  async function handleBuyProduct() {
-    try {
-      setIsCreatingCheckoutSession(true)
-
-      const response = await axios.post("/api/checkout", {
-        priceId: product.defaultPriceId,
-      })
-
-      const { checkoutUrl } = response.data
-
-      window.location.href = checkoutUrl
-    } catch (err) {
-      alert("Falha ao redirecionar o checkout !")
-    }
-  }
+  const { addItem, cart } = useCart()
 
   return (
     <>
@@ -53,16 +38,11 @@ export default function Product({ product }: ProductProps) {
         </ImageContainer>
         <ProductDetails>
           <h1>{product.name}</h1>
-          <span>{product.price}</span>
+          <span>{formatedPrice(product.price)}</span>
 
           <p>{product.description}</p>
 
-          <button
-            onClick={handleBuyProduct}
-            disabled={isCreatingCheckoutSession}
-          >
-            Colocar na sacola
-          </button>
+          <button onClick={() => addItem(product)}>Colocar na sacola</button>
         </ProductDetails>
       </ProductContainer>
     </>
@@ -93,10 +73,7 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({
         id: product.id,
         name: product.name,
         imageUrl: product.images[0],
-        price: new Intl.NumberFormat("pt-BR", {
-          style: "currency",
-          currency: "BRL",
-        }).format(price.unit_amount / 100),
+        price: price.unit_amount,
         description: product.description,
         defaultPriceId: price.id,
       },
